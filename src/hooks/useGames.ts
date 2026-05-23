@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import apiClient from "../serivices/api-client";
+import { CanceledError } from "axios";
 
 //creating a file for hooks
 
-interface Game {
+export interface Game {
   id: number;
   name: string;
+  background_image: string;
 }
 
 interface FetchGamesResponse {
@@ -17,15 +19,24 @@ const useGames = () => {
   const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    apiClient
-      .get<FetchGamesResponse>("/games")
-      .then((res) => setGames(res.data.results))
-      .catch(err=> setError(err.message));  
-  });
+  useEffect(
+    () => {
+      const controller = new AbortController();
+
+      apiClient
+        .get<FetchGamesResponse>("/games", { signal: controller.signal })
+        .then((res) => setGames(res.data.results))
+        .catch((err) => {
+          if (err instanceof CanceledError) return;
+          setError(err.message);
+        });
+
+      return () => controller.abort();
+    },
+    [], //array of dependencies avoids constantly sending requests to backend
+  );
 
   return { games, error };
 };
 
 export default useGames;
- 
