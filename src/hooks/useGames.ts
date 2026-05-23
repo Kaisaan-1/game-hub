@@ -1,0 +1,30 @@
+import { useEffect, useState } from "react";
+import apiClient from "../serivices/api-client";
+
+
+//creating a file for hooks
+
+  interface Game{
+    id: number;
+    name: string;
+}
+
+interface FetchGamesResponse{
+    count: number;
+    results: Game[];
+}
+
+const useGames = () =>{
+const [games, getGames]=useState<Game[]>([])
+const [error, setError]=useState('')
+  
+useEffect(()=>{
+    apiClient.get<FetchGamesResponse>('/games')
+    .then(res => getGames(res.data.results))
+    .catch(err => setError(err.message))
+})
+
+return {games , error}
+}
+
+export default useGames;
