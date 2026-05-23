@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import apiClient from '../serivices/api-client'
-import useGames from '../hooks/useGames'
-
-
+import React, { useEffect, useState } from "react";
+import apiClient from "../serivices/api-client";
+import useGames from "../hooks/useGames";
+import { Text } from "@chakra-ui/react";
 
 const GamesGrid = () => {
- 
-const {games, error}= useGames()
+  const { games, error } = useGames();
 
   return (
-    <ul>
-      {games.map(game=> <li key={game.id}>{game.name}</li>)}
-    </ul>
-  )
-}
+    <>
+      {error && <Text>{error}</Text>}
+      <ul>
+        {games.map((game) => (
+          <li key={game.id}>{game.name}</li>
+        ))}
+      </ul>
+    </>
+  );
+};
 
-export default GamesGrid
+export default GamesGrid;
