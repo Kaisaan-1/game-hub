@@ -1,14 +1,31 @@
-import React from 'react'
-import useGenres from '../hooks/useGenres'
-import useData, { Genre } from '../hooks/useData'
+import React from "react";
+import useGenres from "../hooks/useGenres";
+import useData, { Genre } from "../hooks/useData";
+import { Button, HStack, Image, List, ListItem, Spinner, Text } from "@chakra-ui/react";
 
 const GenreList = () => {
-    const {data} =  useGenres();
-  return (
-    <ul>
-      {data.map(genre => <li key={genre.id}>{genre.name}</li>)}
-    </ul>
-  )
-}
+  const { data, isLoading , error} = useGenres();
 
-export default GenreList
+if (error) return null;
+
+  if(isLoading) return<Spinner/>;
+  return (
+    <List>
+      {data.map((genre) => (
+        <ListItem key={genre.id} paddingY='7px' >
+          <HStack>
+            <Image
+              boxSize="32px"
+              objectFit={"cover"}  
+              borderRadius={8}
+              src={genre.image_background}
+            />
+             <Button onClick={()=> console.log(genre)} variant='link'  fontSize="lg">{genre.name}</Button >
+          </HStack>
+        </ListItem>
+      ))}
+    </List>
+  );
+};
+
+export default GenreList;

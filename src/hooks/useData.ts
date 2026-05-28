@@ -3,8 +3,8 @@ import apiClient from "../services/api-client";
 import { CanceledError } from "axios";
 
 export interface Genre{
-    id: number,
-    name: string
+    id: number;
+    name: string;
 }
 
 interface FetchResponse <T>{ //gtp to interface
