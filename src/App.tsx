@@ -10,6 +10,7 @@ import PlatformIconList from "./components/PlatformIconList";
 import PlatformSelector from "./components/PlatformSelector";
 import { Platform } from "./hooks/useGames";
 import SortSelector from "./components/SortSelector";
+import GameHeading from "./components/GameHeading";
 
 
 export interface GameQuery{
@@ -43,12 +44,15 @@ function App() {
         </GridItem>
       </Show>
       <GridItem  area="main">
-        <Flex paddingLeft={2} marginBottom={3}>
-          <Box marginRight={5}>
-            <PlatformSelector selectedPlatform={gameQuery.platform} onSelectPlatform={(platform)=> setGameQuery({...gameQuery,platform})}/>
-            </Box>
-          <SortSelector sortOrder={gameQuery.sortOrder} onSelectOrder={(sortOrder)=>setGameQuery({ ...gameQuery, sortOrder})}></SortSelector>
-        </Flex>
+        <Box paddingLeft={2}>
+          <GameHeading gameQuery={gameQuery}/>
+          <Flex  marginBottom={3}>
+            <Box marginRight={5}>
+              <PlatformSelector selectedPlatform={gameQuery.platform} onSelectPlatform={(platform)=> setGameQuery({...gameQuery,platform})}/>
+              </Box>
+            <SortSelector sortOrder={gameQuery.sortOrder} onSelectOrder={(sortOrder)=>setGameQuery({ ...gameQuery, sortOrder})}></SortSelector>
+          </Flex>
+        </Box>
         <GamesGrid gameQuery={gameQuery}/>
       </GridItem>
     </Grid>
