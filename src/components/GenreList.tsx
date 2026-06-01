@@ -8,7 +8,7 @@ interface Props{
   onSelectGenre: (genre: Genre) => void
   selectedGenre: Genre | null
 }
- 
+
 const GenreList = ( {onSelectGenre, selectedGenre}:Props) => {
   const { data, isLoading , error} = useGenres();
 
@@ -28,7 +28,7 @@ if (error) return null;
               borderRadius={8}
               src={genre.image_background}
             />
-             <Button fontWeight={genre.id  === selectedGenre?.id ? 'normal' :'bold' } onClick={()=> onSelectGenre(genre)} variant='link'  fontSize="lg">{genre.name}</Button >
+             <Button fontWeight={genre.id  === selectedGenre?.id ? 'normal' :'bold' } onClick={()=> onSelectGenre(genre)} overflow='hidden' variant='link'  fontSize="lg">{genre.name}</Button >
           </HStack>
         </ListItem>
       ))}
