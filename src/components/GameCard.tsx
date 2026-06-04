@@ -3,6 +3,7 @@ import { Game } from "../hooks/useGames";
 import { Card, CardBody, Center, Heading, HStack, Image, position, Text } from "@chakra-ui/react";
 import PlatformIconList from "./PlatformIconList";
 import CriticScore from "./CriticScore";
+import Emoji from "./Emoji";
 
 interface Props {
   game: Game;
@@ -13,11 +14,11 @@ const GameCard = ({ game }: Props) => {
     <Card >
       <Image src={game.background_image}></Image>
       <CardBody height='200'>
-        <Heading fontSize={'2xl'} alignItems={"space-evenly"}>{game.name}</Heading>
         <HStack justifyContent={'space-between'}> 
         <PlatformIconList platforms={game.parent_platforms.map(p=> p.platform)}></PlatformIconList>
         <CriticScore score={game.metacritic} ></CriticScore>
         </HStack>
+        <Heading fontSize={'2xl'} alignItems={"space-evenly"}>{game.name}<Emoji rating ={game.rating_top}/></Heading>
        {/* {game.parent_platforms.map(({platform})=><Text>{platform.name}</Text>)} {/*destructured platform property*/}
       </CardBody>
     </Card>
